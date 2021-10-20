@@ -95,10 +95,24 @@ except the C standard library.  This project can be build by executing the
 following command in a terminal:
 
 ```
-gcc -std=c99 -Wall -Werror -Wextra -Wpedantic main.c -o mkcws
+make
 ```
 
-Other compilers than `gcc` are possible, as well, if desired.
+Other compilers than `gcc` are possible, as well, if desired.  Therefore, the
+variable `CC` in `makefile` should be adjusted.
+
+The command above will build the application and test it with `valgrind` right
+after the compilation finished.  In order to ensure this test to succeed, users
+should make sure that they have a valid `valgrind` installation.  In general,
+users should take a look at the variable settings of the build routine before
+building the application in order to avoid unnecessary errors due to incorrect
+settings regarding their system configuration.
+
+To build without any tests, run:
+
+```
+make mkcws
+```
 
 
 
