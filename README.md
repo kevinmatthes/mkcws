@@ -83,3 +83,56 @@ which are as follows:
     The name `mkcws` is an abbreviation of "**m**a**k**e a new **C**ode
 **w**ork**s**pace" and is inspired by the UNIX commands for creation, such as
 the one for directories: `mkdir`.
+
+
+
+## Build process
+
+Building this project is very simple since it does not depend on anything
+except the C standard library.  This project can be build by executing the
+following command in a terminal:
+
+```
+gcc -std=c99 -Wall -Werror -Wextra -Wpedantic main.c -o mkcws
+```
+
+    Other compilers than `gcc` are possible, as well, if desired.
+
+
+
+## Usage
+
+The usage of `mkcws` is very simple.  Within a terminal, one just needs to call
+
+```
+mkcws <coding language> <project name> <path to project root directory>
+```
+
+in order to create a new Code workspace in the current working directory.  The
+new workspace's name will be determined as follows:
+
+```
+<coding language, lowered>!<project name>.code-workspace
+```
+
+    This procedure ensures the workspaces to be sorted by their main coding
+languages such that even after a long period of time during which nothing was
+edited, the project can still be easily identified.  This style has proven quite
+intuitive and good usable, especially in the case that some projects might share
+their names but differ regarding their coding languages.
+
+    At the moment, the application accepts all parameters just statically in a
+predefined order, such that neither the count of the parameters nor their order
+may be altered without unexpected results.  The mandatory order of the arguments
+is as follows:
+
+1. main coding language
+2. project name
+3. path to the project's root directory
+
+    In case that less or more than three parameters are given to the application,
+it will show an error message and list all given parameters.
+
+    In case that the parameter's order was mixed up for some reasons, the
+application will proceed as instructed with the result that the final workspace
+will not meet the actual expectations.
