@@ -30,6 +30,17 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+
+
+
+/**
+ * Type definitions.
+ */
+
+typedef unsigned long long int natural_t;
+typedef char *                 str_t;
+typedef char * const           string_t;
 
 
 
@@ -37,13 +48,41 @@
  * Function declarations of local auxillary functions.
  */
 
-void license (void);
+natural_t len     (const string_t  self);
+str_t     join    (const string_t  self, const string_t other, const string_t by);
+void      license (void);
+str_t     lower   (const string_t  self);
+str_t     string  (const natural_t size);
 
 
 
 /**
  * Local auxillary functions.
  */
+
+str_t join (const string_t self, const string_t other, const string_t by)
+{
+    natural_t counter = 0ULL;
+    string_t  ret     = string (len (self) + len (other) + len (by) + 0x1);
+
+    for (natural_t i = 0ULL; self[i];  counter++, i++)
+        ret[counter] = self[i];
+
+    for (natural_t i = 0ULL; by[i];    counter++, i++)
+        ret[counter] = by[i];
+
+    for (natural_t i = 0ULL; other[i]; counter++, i++)
+        ret[counter] = other[i];
+
+    return ret;
+}
+
+natural_t len (const string_t self)
+{
+    natural_t ret = 0ULL;
+    for (ret = 0ULL; self[ret]; ret++);
+    return ret;
+}
 
 inline void license (void)
 {
@@ -67,6 +106,25 @@ inline void license (void)
     return;
 }
 
+str_t lower (const string_t self)
+{
+    const int offset = 'a' - 'A';
+    string_t  ret = string (len (self) + 0x1);
+
+    for (natural_t i = 0ULL; self[i]; i++)
+        if ('A' <= self[i] && self[i] <= 'Z')
+            ret[i] = self[i] + offset;
+        else
+            ret[i] = self[i];
+
+    return ret;
+}
+
+inline str_t string (const natural_t size)
+{
+    return (str_t) calloc (size, sizeof (char));
+}
+
 
 
 /**
@@ -78,4 +136,3 @@ int main (void)
     license ();
     return 0x0;
 }
-
