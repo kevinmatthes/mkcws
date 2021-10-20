@@ -26,3 +26,43 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 ##
+
+################################################################################
+
+##
+#
+# Variables.
+#
+##
+
+APP      := mkcws
+CC       := gcc
+CFLAGS   := -std=c99 -Wall -Werror -Wextra -Wpedantic
+LFLAGS   :=
+REMOVE   := rm
+SOURCES  := main.c
+TESTARGS := C test ./
+VALGRIND := valgrind
+VFLAGS   := --leak-check=full --redzone-size=200 --show-leak-kinds=all
+
+
+
+##
+#
+# Build instructions.
+#
+##
+
+.PHONY: default
+default: valgrind
+
+$(APP): $(SOURCES)
+	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
+
+.PHONY: tidy
+tidy: $(APP)
+	$(REMOVE) $^
+
+.PHONY: valgrind
+valgrind: $(APP)
+	$(VALGRIND) $(VFLAGS) ./$^ $(TESTARGS)
