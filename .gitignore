@@ -27,4 +27,8 @@
 #
 ##
 
+# Concrete files.
+mkcws
+
+# File types.
 *.pdf
