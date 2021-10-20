@@ -131,8 +131,69 @@ inline str_t string (const natural_t size)
  * The main function.
  */
 
-int main (void)
+int main (int argc, char **args)
 {
+    if (argc == 0x4)
+    {
+        const string_t language     = args[0x1];
+        const string_t path         = args[0x3];
+        const string_t project_name = args[0x2];
+
+        string_t language_lowered     = lower (language);
+        string_t content              = join ( "{ \"folders\" : [ { \"path\" : \""
+                                             , "\", }, ], \"settings\" : [], }\n"
+                                             , path
+                                             );
+        string_t workspace_identifier = join ( language_lowered
+                                             , project_name
+                                             , "!"
+                                             );
+        string_t workspace_name       = join ( workspace_identifier
+                                             , "code-workspace"
+                                             , "."
+                                             );
+
+        FILE *workspace = fopen (workspace_name, "w");
+
+        if (workspace != NULL)
+        {
+            fprintf (workspace, "%s", content);
+            fclose (workspace);
+            printf ( "Workspace created successfully by using:\n"
+                     "- Language:     %s\n"
+                     "- Project name: %s\n"
+                     "- Path:         %s\n"
+                     "\n"
+                     "The workspace '%s' is defined as follows:\n"
+                     "%s\n"
+                   , language
+                   , project_name
+                   , path
+                   , workspace_name
+                   , content
+                   );
+        }
+        else
+            fprintf (stderr, "The workspace could not be created properly!\n");
+
+        free (content);
+        free (language_lowered);
+        free (workspace_identifier);
+        free (workspace_name);
+    }
+    else
+    {
+        fprintf ( stderr
+                , "The argument count is unexpected!\n"
+                  "These arguments were detected:\n"
+                );
+
+        for (int i = 0x0; i < argc; i++)
+            fprintf (stderr, "- %s\n", args[i]);
+    };
+
+    printf ("\n");
     license ();
+
     return 0x0;
 }

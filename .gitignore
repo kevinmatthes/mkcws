@@ -31,4 +31,5 @@
 mkcws
 
 # File types.
+*.code-workspace
 *.pdf
