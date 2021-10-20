@@ -22,6 +22,8 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 -->
 
+<!----------------------------------------------------------------------------->
+
 # mkcws
 
 ## Summary
@@ -64,14 +66,14 @@ the way of how a project is defined as one differs from IDE to IDE.  Hence,
 people who are new to a certain IDE might wonder how this is processed in the
 concerning IDE.
 
-    For VSC-like IDEs, there are the `*.code-workspace` files which define a
+For VSC-like IDEs, there are the `*.code-workspace` files which define a
 certain directory on the machine's file system to be a workspace for the IDE.
 This specification is made by using a JSON-like syntax.  Hence, workspaces can
 not only be created from within the IDE during a session, but also before the
 first session in this workspace since the used format can be edited by hand and
 any arbitrary editor due to the fact that is just plain text.
 
-    This application, `mkcws`, is one possible solution in order to automate the
+This application, `mkcws`, is one possible solution in order to automate the
 process of workspace creation.  It is designed to be a simple command line
 application which creates the workspace according to different given parameters
 which are as follows:
@@ -80,7 +82,7 @@ which are as follows:
 * the intended project name
 * the path of the directory with all related project files
 
-    The name `mkcws` is an abbreviation of "**m**a**k**e a new **C**ode
+The name `mkcws` is an abbreviation of "**m**a**k**e a new **C**ode
 **w**ork**s**pace" and is inspired by the UNIX commands for creation, such as
 the one for directories: `mkdir`.
 
@@ -96,7 +98,7 @@ following command in a terminal:
 gcc -std=c99 -Wall -Werror -Wextra -Wpedantic main.c -o mkcws
 ```
 
-    Other compilers than `gcc` are possible, as well, if desired.
+Other compilers than `gcc` are possible, as well, if desired.
 
 
 
@@ -105,7 +107,7 @@ gcc -std=c99 -Wall -Werror -Wextra -Wpedantic main.c -o mkcws
 The usage of `mkcws` is very simple.  Within a terminal, one just needs to call
 
 ```
-mkcws <coding language> <project name> <path to project root directory>
+mkcws <coding language> <project name> <path to project>
 ```
 
 in order to create a new Code workspace in the current working directory.  The
@@ -115,13 +117,13 @@ new workspace's name will be determined as follows:
 <coding language, lowered>!<project name>.code-workspace
 ```
 
-    This procedure ensures the workspaces to be sorted by their main coding
+This procedure ensures the workspaces to be sorted by their main coding
 languages such that even after a long period of time during which nothing was
 edited, the project can still be easily identified.  This style has proven quite
 intuitive and good usable, especially in the case that some projects might share
 their names but differ regarding their coding languages.
 
-    At the moment, the application accepts all parameters just statically in a
+At the moment, the application accepts all parameters just statically in a
 predefined order, such that neither the count of the parameters nor their order
 may be altered without unexpected results.  The mandatory order of the arguments
 is as follows:
@@ -130,9 +132,9 @@ is as follows:
 2. project name
 3. path to the project's root directory
 
-    In case that less or more than three parameters are given to the application,
+In case that less or more than three parameters are given to the application,
 it will show an error message and list all given parameters.
 
-    In case that the parameter's order was mixed up for some reasons, the
+In case that the parameter's order was mixed up for some reasons, the
 application will proceed as instructed with the result that the final workspace
 will not meet the actual expectations.
