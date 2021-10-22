@@ -39,9 +39,11 @@ APP      := mkcws
 CC       := gcc
 CFLAGS   := -std=c99 -Wall -Werror -Wextra -Wpedantic
 LFLAGS   :=
+PANDOC   := pandoc
 REMOVE   := rm
-SOURCES  := main.c
+SOURCES  := ./main.c
 TESTARGS := C test ./
+TOREMOVE := $(wildcard ./*.code-workspace) $(wildcard ./*.pdf)
 VALGRIND := valgrind
 VFLAGS   := --leak-check=full --redzone-size=200 --show-leak-kinds=all
 
@@ -60,7 +62,7 @@ $(APP): $(SOURCES)
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
 
 .PHONY: tidy
-tidy: $(APP)
+tidy: $(APP) $(TOREMOVE)
 	$(REMOVE) $^
 
 .PHONY: valgrind
