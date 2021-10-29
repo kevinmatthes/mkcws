@@ -30,17 +30,7 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
-
-
-
-/**
- * Type definitions.
- */
-
-typedef unsigned long long int natural_t;
-typedef char *                 str_t;
-typedef char * const           string_t;
+#include "libstring.h"
 
 
 
@@ -48,41 +38,13 @@ typedef char * const           string_t;
  * Function declarations of local auxillary functions.
  */
 
-natural_t len     (const string_t  self);
-str_t     join    (const string_t  self, const string_t other, const string_t by);
-void      license (void);
-str_t     lower   (const string_t  self);
-str_t     string  (const natural_t size);
+void    license (void);
 
 
 
 /**
  * Local auxillary functions.
  */
-
-str_t join (const string_t self, const string_t other, const string_t by)
-{
-    natural_t counter = 0ULL;
-    string_t  ret     = string (len (self) + len (other) + len (by) + 0x1);
-
-    for (natural_t i = 0ULL; self[i];  counter++, i++)
-        ret[counter] = self[i];
-
-    for (natural_t i = 0ULL; by[i];    counter++, i++)
-        ret[counter] = by[i];
-
-    for (natural_t i = 0ULL; other[i]; counter++, i++)
-        ret[counter] = other[i];
-
-    return ret;
-}
-
-natural_t len (const string_t self)
-{
-    natural_t ret = 0ULL;
-    for (ret = 0ULL; self[ret]; ret++);
-    return ret;
-}
 
 inline void license (void)
 {
@@ -106,25 +68,6 @@ inline void license (void)
     return;
 }
 
-str_t lower (const string_t self)
-{
-    const int offset = 'a' - 'A';
-    string_t  ret = string (len (self) + 0x1);
-
-    for (natural_t i = 0ULL; self[i]; i++)
-        if ('A' <= self[i] && self[i] <= 'Z')
-            ret[i] = self[i] + offset;
-        else
-            ret[i] = self[i];
-
-    return ret;
-}
-
-inline str_t string (const natural_t size)
-{
-    return (str_t) calloc (size, sizeof (char));
-}
-
 
 
 /**
@@ -139,19 +82,19 @@ int main (int argc, char **args)
         const string_t path         = args[0x3];
         const string_t project_name = args[0x2];
 
-        string_t language_lowered     = lower (language);
-        string_t content              = join ( "{ \"folders\" : [ { \"path\" : \""
-                                             , "\", }, ], \"settings\" : [], }\n"
-                                             , path
-                                             );
-        string_t workspace_identifier = join ( language_lowered
-                                             , project_name
-                                             , "!"
-                                             );
-        string_t workspace_name       = join ( workspace_identifier
-                                             , "code-workspace"
-                                             , "."
-                                             );
+        string_t language_lowered     = string_lower (language);
+        string_t content              = string_join ( "{ \"folders\" : [ { \"path\" : \""
+                                                    , "\", }, ], \"settings\" : [], }\n"
+                                                    , path
+                                                    );
+        string_t workspace_identifier = string_join ( language_lowered
+                                                    , project_name
+                                                    , "!"
+                                                    );
+        string_t workspace_name       = string_join ( workspace_identifier
+                                                    , "code-workspace"
+                                                    , "."
+                                                    );
 
         FILE *workspace = fopen (workspace_name, "w");
 
@@ -176,10 +119,10 @@ int main (int argc, char **args)
         else
             fprintf (stderr, "The workspace could not be created properly!\n");
 
-        free (content);
-        free (language_lowered);
-        free (workspace_identifier);
-        free (workspace_name);
+        string_del (content);
+        string_del (language_lowered);
+        string_del (workspace_identifier);
+        string_del (workspace_name);
     }
     else
     {

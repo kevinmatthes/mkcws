@@ -38,7 +38,7 @@
 APP      := mkcws
 CC       := gcc
 CFLAGS   := -std=c99 -Wall -Werror -Wextra -Wpedantic
-LFLAGS   :=
+LFLAGS   := -L. -lstring
 PANDOC   := pandoc
 REMOVE   := rm
 SOURCES  := ./main.c
@@ -56,7 +56,7 @@ VFLAGS   := --leak-check=full --redzone-size=200 --show-leak-kinds=all
 ##
 
 .PHONY: default
-default: valgrind
+default: valgrind tidy
 
 $(APP): $(SOURCES)
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
