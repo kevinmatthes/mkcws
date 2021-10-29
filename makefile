@@ -42,7 +42,7 @@ LFLAGS   := -L. -lstring
 PANDOC   := pandoc
 REMOVE   := rm
 SOURCES  := ./main.c
-TESTARGS := C test ./
+TESTARGS := -lC -ntest -p./
 TOREMOVE := $(wildcard ./*.code-workspace) $(wildcard ./*.pdf)
 VALGRIND := valgrind
 VFLAGS   := --leak-check=full --redzone-size=200 --show-leak-kinds=all
