@@ -76,12 +76,40 @@ inline void license (void)
 
 int main (int argc, char **args)
 {
-    if (argc == 0x4)
-    {
-        const string_t language     = args[0x1];
-        const string_t path         = args[0x3];
-        const string_t project_name = args[0x2];
+    bool    license_mode    = false;
+    str_t   language        = nullptr;
+    str_t   path            = nullptr;
+    str_t   project_name    = nullptr;
 
+    for (int i = 0x0; i < argc; i++)
+    {
+        if      (string_contains (args[i], "-l", BEGIN))
+            language    = string_crop (args[i], "-l", BEGIN);
+        else if (string_contains (args[i], "--language=", BEGIN))
+            language    = string_crop (args[i], "--language=", BEGIN);
+
+        else if (string_contains (args[i], "-n", BEGIN))
+            project_name    = string_crop (args[i], "-n", BEGIN);
+        else if (string_contains (args[i], "--project-name=", BEGIN))
+            project_name    = string_crop (args[i], "--project-name=", BEGIN);
+
+        else if (string_contains (args[i], "-p", BEGIN))
+            path    = string_crop (args[i], "-p", BEGIN);
+        else if (string_contains (args[i], "--path=", BEGIN))
+            path    = string_crop (args[i], "--path=", BEGIN);
+
+        else if (  string_contains (args[i], "-L",                  BEGIN)
+                || string_contains (args[i], "--license",           BEGIN)
+                || string_contains (args[i], "-c",                  BEGIN)
+                || string_contains (args[i], "--copyright",         BEGIN)
+                || string_contains (args[i], "-s",                  BEGIN)
+                || string_contains (args[i], "--show-copyright",    BEGIN)
+                )
+            license_mode    = true;
+    };
+
+    if (language && path && project_name)
+    {
         string_t language_lowered     = string_lower (language);
         string_t content              = string_join ( "{ \"folders\" : [ { \"path\" : \""
                                                     , "\", }, ], \"settings\" : [], }\n"
@@ -126,17 +154,25 @@ int main (int argc, char **args)
     }
     else
     {
-        fprintf ( stderr
-                , "The argument count is unexpected!\n"
-                  "These arguments were detected:\n"
-                );
+        fprintf (stderr, "Arguments are missing!\n");
 
-        for (int i = 0x0; i < argc; i++)
-            fprintf (stderr, "- %s\n", args[i]);
+        if (! language)
+            fprintf (stderr, "* There was no main coding language!\n");
+        if (! path)
+            fprintf (stderr, "* There was no path to the project!\n");
+        if (! project_name)
+            fprintf (stderr, "* There was no project name!\n");
+            
+        fprintf (stderr, "\n");
     };
 
-    printf ("\n");
-    license ();
+    string_del (language);
+    string_del (path);
+    string_del (project_name);
+
+
+    if (license_mode)
+        license ();
 
     return 0x0;
 }
