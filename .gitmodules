@@ -1,0 +1,3 @@
+[submodule "libstring"]
+	path = libstring
+	url = https://github.com/kevinmatthes/libstring
