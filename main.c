@@ -108,7 +108,9 @@ int main (int argc, char **args)
             license_mode    = true;
     };
 
-    if (language && path && project_name)
+    if (license_mode)
+        license ();
+    else if (language && path && project_name)
     {
         string_t language_lowered     = string_lower (language);
         string_t content              = string_join ( "{ \"folders\" : [ { \"path\" : \""
@@ -162,17 +164,13 @@ int main (int argc, char **args)
             fprintf (stderr, "* There was no path to the project!\n");
         if (! project_name)
             fprintf (stderr, "* There was no project name!\n");
-            
+
         fprintf (stderr, "\n");
     };
 
     string_del (language);
     string_del (path);
     string_del (project_name);
-
-
-    if (license_mode)
-        license ();
 
     return 0x0;
 }
