@@ -118,6 +118,29 @@ make mkcws
 
 ## Usage
 
+### Options
+
+`mkcws` uses options in order to determine the mode to use.  In the following,
+a table will explain all options, what has be passed with them and how high
+their priority is.  Priority is counted in the UNIX style, i. e. the lower the
+integer number is, the higher is the associated priority.  Hence, priority `0`
+is the highest possible one.
+
+Option              | Prio. | Category  | Meaning               | Requirement(s)
+:-------------------|:-----:|:----------|:----------------------|:--------------
+`-L`                | 0     | state     | show the license      | none
+`-c`                | 0     | state     | show the license      | none
+`--copyright`       | 0     | state     | show the license      | none
+`-l`                | 1     | content   | main coding language  | `-n`, `-p`
+`--language=`       | 1     | content   | main coding language  | `-n`, `-p`
+`--license`         | 0     | state     | show the license      | none
+`-n`                | 1     | content   | project name          | `-l`, `-p`
+`-p`                | 1     | content   | path to the project   | `-l`, `-n`
+`--path=`           | 1     | content   | path to the project   | `-l`, `-n`
+`--project-name=`   | 1     | content   | project name          | `-l`, `-p`
+`-s`                | 0     | state     | show the license      | none
+`--show-copyright`  | 0     | state     | show the license      | none
+
 The usage of `mkcws` is very simple.  Within a terminal, one just needs to call
 
 ```
