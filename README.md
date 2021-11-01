@@ -34,9 +34,9 @@ A simple command line application in order to create new Code workspaces.
 
 ## License
 
-This project's license is **GPL 2**.  The whole license text can be found in
-`LICENSE` in the main directory of this repository.  The brief version of the
-license is as follows:
+This project's license is **GPL 2** (as of June 1991).  The whole license text
+can be found in `LICENSE` in the main directory of this repository.  The brief
+version of the license is as follows:
 
 > Copyright (C) 2021 Kevin Matthes
 >
