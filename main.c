@@ -120,9 +120,9 @@ int main (int argc, char **args)
                                                     , path
                                                     );
         string_t workspace_identifier = language_lowered ? string_join ( language_lowered
-                                                               , project_name
-                                                               , "!"
-                                                               )
+                                                                       , project_name
+                                                                       , "!"
+                                                                       )
                                                          : string_copy (project_name)
                                                          ;
         string_t workspace_name       = string_join ( workspace_identifier
