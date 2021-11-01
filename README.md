@@ -168,3 +168,16 @@ order of options may be altered as desired.  The result will be new Code
 workspace named `<project name>.code-workspace`, as the application will show
 in the message of success to the user.  In case that creation fails for some
 reasons, the users will be informed about that, as well.
+
+As a utility feature, `mkcws` offers the possibility to note the project's main
+coding language in the workspace's identifier, too.  This is a benefit in order
+to distinct the projects easier since the passed coding language will cause the
+naming scheme `<coding language>!<project name>.code-workspace` to be applied.
+The application will then need to be called as follows:
+
+```
+mkcws -n<project name> -p<project path> -l<coding language>
+```
+
+The definition of the project's main coding language is not mandatory.  It
+requires the project's name and path to be defined, as well.
