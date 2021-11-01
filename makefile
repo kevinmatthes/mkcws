@@ -42,7 +42,6 @@ LFLAGS   := -L. -lstring
 PANDOC   := pandoc
 REMOVE   := rm
 SOURCES  := ./main.c
-TESTARGS := -lC -ntest -p./
 TOREMOVE := $(wildcard ./*.code-workspace) $(wildcard ./*.pdf)
 VALGRIND := valgrind.log
 VFLAGS   := --leak-check=full --redzone-size=200 --show-leak-kinds=all
@@ -66,4 +65,7 @@ tidy: $(APP) $(TOREMOVE)
 	$(REMOVE) $^
 
 $(VALGRIND): $(APP)
-	valgrind $(VFLAGS) ./$^ $(TESTARGS) 2> $@
+	valgrind $(VFLAGS) ./$^ -lC -ntest -p./ 2>  $@
+	valgrind $(VFLAGS) ./$^ -ntest -p./     2>> $@
+	valgrind $(VFLAGS) ./$^ -ntest -p./ -L  2>> $@
+	valgrind $(VFLAGS) ./$^ -L              2>> $@
