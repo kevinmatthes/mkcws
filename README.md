@@ -155,3 +155,16 @@ or similiar options as given in the table above.  The copyright option will
 override any other options such that even when the application is called with
 multiple copyright options or together with content options, it will just show
 the copyright notice to the user.
+
+In order to create a new Code workspace, at least the project's name and path
+do need to be specified.  The application's call will then look like this:
+
+```
+mkcws -n<project name> -p<project path>
+```
+
+Similiar options from the table above may be used, as well.  Furthermore, the
+order of options may be altered as desired.  The result will be new Code
+workspace named `<project name>.code-workspace`, as the application will show
+in the message of success to the user.  In case that creation fails for some
+reasons, the users will be informed about that, as well.
