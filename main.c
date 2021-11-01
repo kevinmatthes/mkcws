@@ -158,8 +158,6 @@ int main (int argc, char **args)
             fprintf (stderr, "* There was no path to the project!\n");
         if (! project_name)
             fprintf (stderr, "* There was no project name!\n");
-
-        fprintf (stderr, "\n");
     };
 
     string_del (language);

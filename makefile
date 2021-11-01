@@ -69,3 +69,4 @@ $(VALGRIND): $(APP)
 	valgrind $(VFLAGS) ./$^ -ntest -p./     2>> $@
 	valgrind $(VFLAGS) ./$^ -ntest -p./ -L  2>> $@
 	valgrind $(VFLAGS) ./$^ -L              2>> $@
+	valgrind $(VFLAGS) ./$^                 2>> $@
