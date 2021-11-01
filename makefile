@@ -38,6 +38,8 @@
 APP      := mkcws
 CC       := gcc
 CFLAGS   := -std=c99 -Wall -Werror -Wextra -Wpedantic
+COPY     := cp
+INSTALL  := ~/.local/bin/
 LFLAGS   := -L. -lstring
 PANDOC   := pandoc
 REMOVE   := rm
@@ -59,6 +61,10 @@ default: $(VALGRIND) tidy
 
 $(APP): $(SOURCES)
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
+
+.PHONY: install
+install: $(APP)
+	$(COPY) $^ $(INSTALL)
 
 .PHONY: tidy
 tidy: $(APP) $(TOREMOVE)
