@@ -140,3 +140,18 @@ Option              | Prio. | Category  | Meaning               | Requirement(s)
 `--project-name=`   | 1     | content   | project name          | `-p`
 `-s`                | 0     | state     | show the license      | none
 `--show-copyright`  | 0     | state     | show the license      | none
+
+
+
+### Option application
+
+In order to view the application's copyright notice, one just needs to execute
+
+```
+mkcws -L
+```
+
+or similiar options as given in the table above.  The copyright option will
+override any other options such that even when the application is called with
+multiple copyright options or together with content options, it will just show
+the copyright notice to the user.
