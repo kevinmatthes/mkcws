@@ -131,47 +131,12 @@ Option              | Prio. | Category  | Meaning               | Requirement(s)
 `-L`                | 0     | state     | show the license      | none
 `-c`                | 0     | state     | show the license      | none
 `--copyright`       | 0     | state     | show the license      | none
-`-l`                | 1     | content   | main coding language  | `-n`, `-p`
-`--language=`       | 1     | content   | main coding language  | `-n`, `-p`
+`-l`                | 2     | content   | main coding language  | `-n`, `-p`
+`--language=`       | 2     | content   | main coding language  | `-n`, `-p`
 `--license`         | 0     | state     | show the license      | none
-`-n`                | 1     | content   | project name          | `-l`, `-p`
-`-p`                | 1     | content   | path to the project   | `-l`, `-n`
-`--path=`           | 1     | content   | path to the project   | `-l`, `-n`
-`--project-name=`   | 1     | content   | project name          | `-l`, `-p`
+`-n`                | 1     | content   | project name          | `-p`
+`-p`                | 1     | content   | path to the project   | `-n`
+`--path=`           | 1     | content   | path to the project   | `-n`
+`--project-name=`   | 1     | content   | project name          | `-p`
 `-s`                | 0     | state     | show the license      | none
 `--show-copyright`  | 0     | state     | show the license      | none
-
-The usage of `mkcws` is very simple.  Within a terminal, one just needs to call
-
-```
-mkcws <coding language> <project name> <path to project>
-```
-
-in order to create a new Code workspace in the current working directory.  The
-new workspace's name will be determined as follows:
-
-```
-<coding language, lowered>!<project name>.code-workspace
-```
-
-This procedure ensures the workspaces to be sorted by their main coding
-languages such that even after a long period of time during which nothing was
-edited, the project can still be easily identified.  This style has proven quite
-intuitive and good usable, especially in the case that some projects might share
-their names but differ regarding their coding languages.
-
-At the moment, the application accepts all parameters just statically in a
-predefined order, such that neither the count of the parameters nor their order
-may be altered without unexpected results.  The mandatory order of the arguments
-is as follows:
-
-1. main coding language
-2. project name
-3. path to the project's root directory
-
-In case that less or more than three parameters are given to the application,
-it will show an error message and list all given parameters.
-
-In case that the parameter's order was mixed up for some reasons, the
-application will proceed as instructed with the result that the final workspace
-will not meet the actual expectations.
