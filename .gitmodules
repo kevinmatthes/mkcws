@@ -1,3 +1,6 @@
 [submodule "libstring"]
 	path = libstring
 	url = https://github.com/kevinmatthes/libstring
+[submodule "contributing"]
+	path = contributing
+	url = https://github.com/kevinmatthes/contributing
