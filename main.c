@@ -110,17 +110,21 @@ int main (int argc, char **args)
 
     if (license_mode)
         license ();
-    else if (language && path && project_name)
+    else if (path && project_name)
     {
-        string_t language_lowered     = string_lower (language);
+        string_t language_lowered     = language ? string_lower (language)
+                                                 : nullptr
+                                                 ;
         string_t content              = string_join ( "{ \"folders\" : [ { \"path\" : \""
                                                     , "\", }, ], \"settings\" : [], }\n"
                                                     , path
                                                     );
-        string_t workspace_identifier = string_join ( language_lowered
-                                                    , project_name
-                                                    , "!"
-                                                    );
+        string_t workspace_identifier = language_lowered ? string_join ( language_lowered
+                                                               , project_name
+                                                               , "!"
+                                                               )
+                                                         : string_copy (project_name)
+                                                         ;
         string_t workspace_name       = string_join ( workspace_identifier
                                                     , "code-workspace"
                                                     , "."
@@ -132,16 +136,8 @@ int main (int argc, char **args)
         {
             fprintf (workspace, "%s", content);
             fclose (workspace);
-            printf ( "Workspace created successfully by using:\n"
-                     "- Language:     %s\n"
-                     "- Project name: %s\n"
-                     "- Path:         %s\n"
-                     "\n"
-                     "The workspace '%s' is defined as follows:\n"
+            printf ( "The workspace '%s' is defined as follows:\n"
                      "%s\n"
-                   , language
-                   , project_name
-                   , path
                    , workspace_name
                    , content
                    );
@@ -158,8 +154,6 @@ int main (int argc, char **args)
     {
         fprintf (stderr, "Arguments are missing!\n");
 
-        if (! language)
-            fprintf (stderr, "* There was no main coding language!\n");
         if (! path)
             fprintf (stderr, "* There was no path to the project!\n");
         if (! project_name)
