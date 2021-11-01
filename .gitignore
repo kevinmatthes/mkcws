@@ -35,5 +35,6 @@ mkcws
 # File types.
 *.a
 *.code-workspace
+*.log
 *.o
 *.pdf

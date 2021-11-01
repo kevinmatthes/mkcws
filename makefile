@@ -44,7 +44,7 @@ REMOVE   := rm
 SOURCES  := ./main.c
 TESTARGS := -lC -ntest -p./
 TOREMOVE := $(wildcard ./*.code-workspace) $(wildcard ./*.pdf)
-VALGRIND := valgrind
+VALGRIND := valgrind.log
 VFLAGS   := --leak-check=full --redzone-size=200 --show-leak-kinds=all
 
 
@@ -56,7 +56,7 @@ VFLAGS   := --leak-check=full --redzone-size=200 --show-leak-kinds=all
 ##
 
 .PHONY: default
-default: valgrind tidy
+default: $(VALGRIND) tidy
 
 $(APP): $(SOURCES)
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
@@ -65,6 +65,5 @@ $(APP): $(SOURCES)
 tidy: $(APP) $(TOREMOVE)
 	$(REMOVE) $^
 
-.PHONY: valgrind
-valgrind: $(APP)
-	$(VALGRIND) $(VFLAGS) ./$^ $(TESTARGS)
+$(VALGRIND): $(APP)
+	valgrind $(VFLAGS) ./$^ $(TESTARGS) 2> $@
